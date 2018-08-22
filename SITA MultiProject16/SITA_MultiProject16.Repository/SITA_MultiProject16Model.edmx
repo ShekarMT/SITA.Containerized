@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AirportModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AirportModelStoreContainer">
+          <EntitySet Name="Airline" EntityType="AirportModel.Store.Airline" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Airport" EntityType="AirportModel.Store.Airport" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AllowedAirportToAirlineMapp" EntityType="AirportModel.Store.AllowedAirportToAirlineMapp" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AssignedAirportToAirlineMapp" EntityType="AirportModel.Store.AssignedAirportToAirlineMapp" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Region" EntityType="AirportModel.Store.Region" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Airport_Region" Association="AirportModel.Store.FK_Airport_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Airport" EntitySet="Airport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllowedAirportToAirlineMapp_Airline" Association="AirportModel.Store.FK_AllowedAirportToAirlineMapp_Airline">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="AllowedAirportToAirlineMapp" EntitySet="AllowedAirportToAirlineMapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp" Association="AirportModel.Store.FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="AllowedAirportToAirlineMapp" EntitySet="AllowedAirportToAirlineMapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssignedAirportToAirlineMapp_Airline" Association="AirportModel.Store.FK_AssignedAirportToAirlineMapp_Airline">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="AssignedAirportToAirlineMapp" EntitySet="AssignedAirportToAirlineMapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp" Association="AirportModel.Store.FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="AssignedAirportToAirlineMapp" EntitySet="AssignedAirportToAirlineMapp" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="AirlineATACode" Type="varchar" MaxLength="50" />
+          <Property Name="GlobalManagementAirportId" Type="int" />
+          <Property Name="Topic" Type="varchar" MaxLength="50" />
+          <Property Name="TopicComunicationString" Type="varchar" MaxLength="50" />
+          <Property Name="PrimaryContactNumber" Type="varchar" MaxLength="50" />
+          <Property Name="PrimaryContactName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="IsCinfigured" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="AirportATACode" Type="varchar" MaxLength="50" />
+          <Property Name="PrimaryContactName" Type="varchar" MaxLength="50" />
+          <Property Name="PrimaryContactNumber" Type="varchar" MaxLength="50" />
+          <Property Name="AlternateContactNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AllowedAirportToAirlineMapp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AirlineId" Type="int" />
+          <Property Name="AirportId" Type="int" />
+        </EntityType>
+        <EntityType Name="AssignedAirportToAirlineMapp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AirlineId" Type="int" />
+          <Property Name="AirportId" Type="int" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="PrimaryRegionUrlription" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="ServiceUrl" Type="varchar" MaxLength="50" />
+          <Property Name="FailoverRegion" Type="int" />
+          <Property Name="FailoverRegionUrl" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Airport_Region">
+          <End Role="Region" Type="AirportModel.Store.Region" Multiplicity="1" />
+          <End Role="Airport" Type="AirportModel.Store.Airport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Airport">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AllowedAirportToAirlineMapp_Airline">
+          <End Role="Airline" Type="AirportModel.Store.Airline" Multiplicity="0..1" />
+          <End Role="AllowedAirportToAirlineMapp" Type="AirportModel.Store.AllowedAirportToAirlineMapp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AllowedAirportToAirlineMapp">
+              <PropertyRef Name="AirlineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp">
+          <End Role="Airport" Type="AirportModel.Store.Airport" Multiplicity="0..1" />
+          <End Role="AllowedAirportToAirlineMapp" Type="AirportModel.Store.AllowedAirportToAirlineMapp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AllowedAirportToAirlineMapp">
+              <PropertyRef Name="AirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssignedAirportToAirlineMapp_Airline">
+          <End Role="Airline" Type="AirportModel.Store.Airline" Multiplicity="0..1" />
+          <End Role="AssignedAirportToAirlineMapp" Type="AirportModel.Store.AssignedAirportToAirlineMapp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airline">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssignedAirportToAirlineMapp">
+              <PropertyRef Name="AirlineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp">
+          <End Role="Airport" Type="AirportModel.Store.Airport" Multiplicity="0..1" />
+          <End Role="AssignedAirportToAirlineMapp" Type="AirportModel.Store.AssignedAirportToAirlineMapp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssignedAirportToAirlineMapp">
+              <PropertyRef Name="AirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AirportModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AirportEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Airline" EntityType="AirportModel.Airline" />
+          <EntitySet Name="Airport" EntityType="AirportModel.Airport" />
+          <EntitySet Name="AllowedAirportToAirlineMapp" EntityType="AirportModel.AllowedAirportToAirlineMapp" />
+          <EntitySet Name="AssignedAirportToAirlineMapp" EntityType="AirportModel.AssignedAirportToAirlineMapp" />
+          <EntitySet Name="Region" EntityType="AirportModel.Region" />
+          <AssociationSet Name="FK_AllowedAirportToAirlineMapp_Airline" Association="AirportModel.FK_AllowedAirportToAirlineMapp_Airline">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="AllowedAirportToAirlineMapp" EntitySet="AllowedAirportToAirlineMapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssignedAirportToAirlineMapp_Airline" Association="AirportModel.FK_AssignedAirportToAirlineMapp_Airline">
+            <End Role="Airline" EntitySet="Airline" />
+            <End Role="AssignedAirportToAirlineMapp" EntitySet="AssignedAirportToAirlineMapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Airport_Region" Association="AirportModel.FK_Airport_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Airport" EntitySet="Airport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp" Association="AirportModel.FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="AllowedAirportToAirlineMapp" EntitySet="AllowedAirportToAirlineMapp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp" Association="AirportModel.FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="AssignedAirportToAirlineMapp" EntitySet="AssignedAirportToAirlineMapp" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Airline">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AirlineATACode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="GlobalManagementAirportId" Type="Int32" />
+          <Property Name="Topic" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="TopicComunicationString" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PrimaryContactNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PrimaryContactName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="IsCinfigured" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AllowedAirportToAirlineMapp" Relationship="AirportModel.FK_AllowedAirportToAirlineMapp_Airline" FromRole="Airline" ToRole="AllowedAirportToAirlineMapp" />
+          <NavigationProperty Name="AssignedAirportToAirlineMapp" Relationship="AirportModel.FK_AssignedAirportToAirlineMapp_Airline" FromRole="Airline" ToRole="AssignedAirportToAirlineMapp" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AirportATACode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PrimaryContactName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PrimaryContactNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AlternateContactNumber" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Region" Relationship="AirportModel.FK_Airport_Region" FromRole="Airport" ToRole="Region" />
+          <NavigationProperty Name="AllowedAirportToAirlineMapp" Relationship="AirportModel.FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp" FromRole="Airport" ToRole="AllowedAirportToAirlineMapp" />
+          <NavigationProperty Name="AssignedAirportToAirlineMapp" Relationship="AirportModel.FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp" FromRole="Airport" ToRole="AssignedAirportToAirlineMapp" />
+        </EntityType>
+        <EntityType Name="AllowedAirportToAirlineMapp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Airline" Relationship="AirportModel.FK_AllowedAirportToAirlineMapp_Airline" FromRole="AllowedAirportToAirlineMapp" ToRole="Airline" />
+          <NavigationProperty Name="Airport" Relationship="AirportModel.FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp" FromRole="AllowedAirportToAirlineMapp" ToRole="Airport" />
+        </EntityType>
+        <EntityType Name="AssignedAirportToAirlineMapp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Airline" Relationship="AirportModel.FK_AssignedAirportToAirlineMapp_Airline" FromRole="AssignedAirportToAirlineMapp" ToRole="Airline" />
+          <NavigationProperty Name="Airport" Relationship="AirportModel.FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp" FromRole="AssignedAirportToAirlineMapp" ToRole="Airport" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PrimaryRegionUrlription" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="ServiceUrl" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="FailoverRegion" Type="Int32" />
+          <Property Name="FailoverRegionUrl" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Airport" Relationship="AirportModel.FK_Airport_Region" FromRole="Region" ToRole="Airport" />
+        </EntityType>
+        <Association Name="FK_AllowedAirportToAirlineMapp_Airline">
+          <End Role="Airline" Type="AirportModel.Airline" Multiplicity="0..1" />
+          <End Role="AllowedAirportToAirlineMapp" Type="AirportModel.AllowedAirportToAirlineMapp" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_AssignedAirportToAirlineMapp_Airline">
+          <End Role="Airline" Type="AirportModel.Airline" Multiplicity="0..1" />
+          <End Role="AssignedAirportToAirlineMapp" Type="AirportModel.AssignedAirportToAirlineMapp" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Airport_Region">
+          <End Role="Region" Type="AirportModel.Region" Multiplicity="1" />
+          <End Role="Airport" Type="AirportModel.Airport" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp">
+          <End Role="Airport" Type="AirportModel.Airport" Multiplicity="0..1" />
+          <End Role="AllowedAirportToAirlineMapp" Type="AirportModel.AllowedAirportToAirlineMapp" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp">
+          <End Role="Airport" Type="AirportModel.Airport" Multiplicity="0..1" />
+          <End Role="AssignedAirportToAirlineMapp" Type="AirportModel.AssignedAirportToAirlineMapp" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AirportModelStoreContainer" CdmEntityContainer="AirportEntities">
+          <EntitySetMapping Name="Airline">
+            <EntityTypeMapping TypeName="AirportModel.Airline">
+              <MappingFragment StoreEntitySet="Airline">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AirlineATACode" ColumnName="AirlineATACode" />
+                <ScalarProperty Name="GlobalManagementAirportId" ColumnName="GlobalManagementAirportId" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="TopicComunicationString" ColumnName="TopicComunicationString" />
+                <ScalarProperty Name="PrimaryContactNumber" ColumnName="PrimaryContactNumber" />
+                <ScalarProperty Name="PrimaryContactName" ColumnName="PrimaryContactName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="IsCinfigured" ColumnName="IsCinfigured" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Airport">
+            <EntityTypeMapping TypeName="AirportModel.Airport">
+              <MappingFragment StoreEntitySet="Airport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AirportATACode" ColumnName="AirportATACode" />
+                <ScalarProperty Name="PrimaryContactName" ColumnName="PrimaryContactName" />
+                <ScalarProperty Name="PrimaryContactNumber" ColumnName="PrimaryContactNumber" />
+                <ScalarProperty Name="AlternateContactNumber" ColumnName="AlternateContactNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllowedAirportToAirlineMapp">
+            <EntityTypeMapping TypeName="AirportModel.AllowedAirportToAirlineMapp">
+              <MappingFragment StoreEntitySet="AllowedAirportToAirlineMapp">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssignedAirportToAirlineMapp">
+            <EntityTypeMapping TypeName="AirportModel.AssignedAirportToAirlineMapp">
+              <MappingFragment StoreEntitySet="AssignedAirportToAirlineMapp">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="AirportModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PrimaryRegionUrlription" ColumnName="PrimaryRegionUrlription" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceUrl" ColumnName="ServiceUrl" />
+                <ScalarProperty Name="FailoverRegion" ColumnName="FailoverRegion" />
+                <ScalarProperty Name="FailoverRegionUrl" ColumnName="FailoverRegionUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_AllowedAirportToAirlineMapp_Airline" TypeName="AirportModel.FK_AllowedAirportToAirlineMapp_Airline" StoreEntitySet="AllowedAirportToAirlineMapp">
+            <EndProperty Name="Airline">
+              <ScalarProperty Name="Id" ColumnName="AirlineId" />
+            </EndProperty>
+            <EndProperty Name="AllowedAirportToAirlineMapp">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="AirlineId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_AssignedAirportToAirlineMapp_Airline" TypeName="AirportModel.FK_AssignedAirportToAirlineMapp_Airline" StoreEntitySet="AssignedAirportToAirlineMapp">
+            <EndProperty Name="Airline">
+              <ScalarProperty Name="Id" ColumnName="AirlineId" />
+            </EndProperty>
+            <EndProperty Name="AssignedAirportToAirlineMapp">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="AirlineId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Airport_Region" TypeName="AirportModel.FK_Airport_Region" StoreEntitySet="Airport">
+            <EndProperty Name="Region">
+              <ScalarProperty Name="Id" ColumnName="RegionId" />
+            </EndProperty>
+            <EndProperty Name="Airport">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp" TypeName="AirportModel.FK_AllowedAirportToAirlineMapp_AllowedAirportToAirlineMapp" StoreEntitySet="AllowedAirportToAirlineMapp">
+            <EndProperty Name="Airport">
+              <ScalarProperty Name="Id" ColumnName="AirportId" />
+            </EndProperty>
+            <EndProperty Name="AllowedAirportToAirlineMapp">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="AirportId" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp" TypeName="AirportModel.FK_AssignedAirportToAirlineMapp_AssignedAirportToAirlineMapp" StoreEntitySet="AssignedAirportToAirlineMapp">
+            <EndProperty Name="Airport">
+              <ScalarProperty Name="Id" ColumnName="AirportId" />
+            </EndProperty>
+            <EndProperty Name="AssignedAirportToAirlineMapp">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition ColumnName="AirportId" IsNull="false" />
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
